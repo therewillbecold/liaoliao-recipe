@@ -1,0 +1,15 @@
+.recommended {
+  .lunbo {
+    margin-top: 0.6rem;
+  }
+  .btns {
+    margin-top: 0.05rem;
+    width: 100%;
+    height: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    .btn {
+      flex: 0 1 200px;
+    }
+  }
+}

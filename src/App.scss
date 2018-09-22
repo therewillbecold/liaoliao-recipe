@@ -1,0 +1,17 @@
+@import "./common/variables";
+html {
+  font-size: 100px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  color: $fontColor;
+}
+.color-main{
+  color: $colorMain;
+}
+a{
+  text-decoration: none;
+}

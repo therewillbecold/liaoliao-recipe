@@ -1,0 +1,45 @@
+.recipe{
+    .pic{
+        width:100%;
+        height: 2.5rem;
+    }
+    .titleBar{
+        width: 100%;
+        height: 1rem;
+        padding-right: 20px;
+        .title{
+            width: 3rem;
+            height: 1rem;
+            font-size: 0.3rem;
+            font-weight: 700;
+            line-height: 1rem;
+            padding-left: 20px;
+            float: left;
+        }
+        .btn{
+            width:0.5rem;
+            height: 0.3rem;
+            text-align: center;
+            line-height: 0.3rem;
+            border: 1px solid #000;
+            font-size: 0.18rem;
+            float: right;
+            margin-top: 0.7rem;
+            cursor: pointer;
+        }
+    }
+    .description{
+        font-size: 0.16rem;
+        color: #585858;
+    }
+    .ingredient{
+        font-size: 0.25rem;
+        font-weight: 700;
+        color: black;
+    }
+    .cook{
+        font-size: 0.25rem;
+        font-weight: 700;
+        color: black;
+    }
+}
