@@ -1,9 +1,10 @@
 import axios from 'axios'
-let host = 'http://localhost:60000'
+let host = process.env.NODE_ENV === 'production' ? 'http://liaoliaodesign.site' : 'http://localhost:60000'
 const API = {
   getCategories: '/api/categories',
   getRecipesByCategoryId: '/api/recipe',
-  getRecipeDetail: '/api/detail'
+  getRecipeDetail: '/api/detail',
+  searchItems: '/api/search'
 }
 
 const Ajax = function (url, method, params) {
@@ -13,7 +14,6 @@ const Ajax = function (url, method, params) {
   } else {
     paramObj.data = params
   }
-  console.log(paramObj);
   return axios({
     url: host + url,
     method,
@@ -39,4 +39,8 @@ export function getRecipesByCategoryId(params) {
 
 export function getRecipeDetail(params) {
   return Ajax.get(API.getRecipeDetail, params)
+}
+
+export function searchItems(params) {
+  return Ajax.get(API.searchItems, params)
 }

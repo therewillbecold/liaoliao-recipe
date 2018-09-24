@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 class Ingredient extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+    }
+    static defaultProps = {
+        name: '',
+        amount: ''
     }
     render() {
         return (<div className='ingredients'
@@ -26,7 +29,7 @@ class Ingredient extends Component {
                         float: 'left',
                         paddingTop:'0.16rem'
                     }}
-                >海米</div>
+                >{this.props.name}</div>
                 <div
                 style={{
                     fontSize: '0.15rem',
@@ -34,7 +37,7 @@ class Ingredient extends Component {
                     float: 'right',
                     paddingTop:'0.16rem'
                 }}
-                >100g</div>
+                >{this.props.amount}</div>
             </div>
         </div>);
     }

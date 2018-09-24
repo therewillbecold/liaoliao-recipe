@@ -4,6 +4,7 @@ import BottomBar from './components/bottomBar'
 import './App.scss'
 import './static/iconFont/iconfont.css'
 
+
 class App extends Component {
 
   render() {

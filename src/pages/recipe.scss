@@ -17,15 +17,20 @@
             float: left;
         }
         .btn{
-            width:0.5rem;
-            height: 0.3rem;
+            width:0.4rem;
+            height: 0.25rem;
             text-align: center;
-            line-height: 0.3rem;
-            border: 1px solid #000;
-            font-size: 0.18rem;
+            line-height: 0.25rem;
+            font-size: 0.12rem;
             float: right;
             margin-top: 0.7rem;
             cursor: pointer;
+            border-radius: 0.03rem;
+            border: 1px solid #000;
+        }
+        .btn.favor{
+            background: #cbb99f;
+            color: #fff;
         }
     }
     .description{

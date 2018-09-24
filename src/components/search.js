@@ -19,7 +19,6 @@ class Search extends Component {
     )
   }
   onKeyUp = event => {
-    console.log('event.keyCode', event.keyCode)
     if (event && event.keyCode === 13) {
       this.props.onSearch(this.state.text)
     }

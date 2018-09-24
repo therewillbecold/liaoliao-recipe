@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import Search from '../components/search'
 import ButtonBar from '../components/buttonBar'
 import ListBar from '../components/listBar'
-import { getCategories } from '../common/api'
-import { getRecipesByCategoryId } from '../common/api'
-import { resolve } from 'url';
+import { getRecipesByCategoryId, searchItems, getCategories } from '../common/api'
+
 class Classified extends Component {
   constructor(props) {
     super(props)
@@ -19,12 +18,22 @@ class Classified extends Component {
   componentWillMount() {
     this.getCategories()
   }
-  search = () => {
-    console.log('搜索:', this.state.searchInp)
+  search = (text) => {
+    searchItems({
+      keyword: text
+    })
+    .then(res => {
+      let data = []
+      if (res && res.status == 200) {
+        data = res.data.data
+      }
+      this.setState({
+        recipeList: data
+      })
+    })
   }
   getCategories = () => {
     getCategories().then(res => {
-      // console.log(res);
       this.setState({
         categories: res.data.data,
         currentCategory: res.data.data[0]
@@ -76,7 +85,7 @@ class Classified extends Component {
         {this.state.recipeList.map(item => {
           // console.log('item: ', item);
           return <div className='listBar' key={item.id} onClick={this.changeTab(item)}>
-            <a href={`/recipe/${item.id}`}>
+            <a href={`#/recipe/${item.id}`}>
             <ListBar recipe={item} current={this.state.currentCategory.id === item.id} ></ListBar>
             </a>
           </div>

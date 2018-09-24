@@ -3,15 +3,13 @@ import './recommended.scss'
 import Search from '../components/search'
 import Button from '../components/button'
 import Carrousel from '../components/carrousel'
-import Introduction from '../components/introduction '
-import { getCategories } from '../common/api'
-import { getRecipesByCategoryId } from '../common/api'
+import Introduction from '../components/introduction'
+import { getCategories, getRecipesByCategoryId, searchItems } from '../common/api'
 
 class Recommended extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      searchInp: '',
       categories: [],
       recipe: {},
       recipeList: [],
@@ -21,8 +19,19 @@ class Recommended extends Component {
   componentWillMount() {
     this.getCategories()
   }
-  search = () => {
-    console.log('搜索:', this.state.searchInp)
+  search = (text) => {
+    searchItems({
+      keyword: text
+    })
+    .then(res => {
+      let data = []
+      if (res && res.status == 200) {
+        data = res.data.data
+      }
+      this.setState({
+        recipeList: data
+      })
+    })
   }
   getCategories = () => {
     getCategories().then(res => {
@@ -60,7 +69,6 @@ class Recommended extends Component {
       <div className="recommended">
         <div className="search">
           <Search
-            onChange={val => this.setState({ searchInp: val })}
             onSearch={this.search}
             placeholder="搜索食谱"
           />
@@ -71,7 +79,6 @@ class Recommended extends Component {
 
         <div className="btns">
           {this.state.categories.map(item => {
-            console.log('item: ', item);
             return (
               <div className='btn' key={item.id} onClick={this.changeTab(item)}>
                 <Button text={item.name} current={this.state.currentCategory.id === item.id}></Button>
@@ -83,7 +90,7 @@ class Recommended extends Component {
         <ul>
           {this.state.recipeList.map(item => (
             <li className="introduction" key={item.id}>
-              <a href={`/recipe/${item.id}`}>
+              <a href={`#/recipe/${item.id}`}>
                 <Introduction recipe={item} />
               </a>
             </li>

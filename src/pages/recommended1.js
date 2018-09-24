@@ -3,7 +3,7 @@ import './recommended.scss'
 import Search from '../components/search'
 import Button from '../components/button1'
 import Carrousel from '../components/carrousel'
-import Introduction from '../components/introduction '
+import Introduction from '../components/introduction'
 import { getCategories } from '../common/api'
 import { getRecipesByCategoryId } from '../common/api'
 

@@ -3,11 +3,9 @@ import './recipe.scss'
 import Tag from '../components/tag';
 import Ingredient from '../components/ingredient';
 import Step from '../components/step';
-import pic from '../static/images/strawberry.jpg';
-import { getCategories } from '../common/api'
 import { getRecipeDetail } from '../common/api'
-import axios from 'axios'
-
+import { connect } from "react-redux";
+import {toggleFavor} from '../store/actions'
 
 class Recipe extends Component {
     constructor(props) {
@@ -21,28 +19,19 @@ class Recipe extends Component {
     componentWillMount() {
         this.getRecipeDetail()
     }
-
+   
     getRecipeDetail = () => {
-        // getRecipeDetail({
-        //     recipeId: this.props.match.params.recipeId
-        // })
-        //     .then(res => {
-        //         console.log(res);
-        //         this.setState({ detail: res.data.data[0] })
-        //     })
-
-        axios.get('http://localhost:60000/api/detail', {
-            params: {
-                recipeId: this.props.match.params.recipeId
-            }
+        getRecipeDetail({
+            ids: encodeURIComponent(JSON.stringify([this.props.match.params.recipeId]))
         })
             .then(res => {
                 this.setState({ detail: res.data.data[0] })
             })
     }
-
+    switchFavor = () => {
+        this.props.toggleFavor(this.recipeId, !this.props.allFavors[this.recipeId])
+    }
     render() {
-        console.log(this.state.detail);
         return (
             <div className="recipe">
                 <div className="pic"
@@ -58,14 +47,14 @@ class Recipe extends Component {
                     <div className="title">
                         {this.state.detail.title}
                     </div>
-                    <div className='btn'>
+                    <div className={`btn ${this.props.allFavors[this.recipeId] && 'favor'}`} onClick={this.switchFavor}>
                         收藏
                     </div>
                 </div>
 
-                <div className="tags">
+                <div className="tags" style={{display: 'flex', flexWrap: 'wrap'}}>
                     {this.state.detail && this.state.detail.tags && this.state.detail.tags.split(';').map((item, index) => {
-                        return <Tag key={index} ></Tag>
+                        return <Tag key={index} text={item}></Tag>
                     })}
                 </div>
                 <div className="description">
@@ -73,20 +62,38 @@ class Recipe extends Component {
                 </div>
                 <div className='ingredient'>用料</div>
                 <div className="ingredientName">
-                    {/* {this.state.detail && this.state.detail.burden && this.detail.burden.split(';').} */}
-                    <Ingredient></Ingredient>
+                    {
+                        this.state.detail && this.state.detail &&
+                        this.state.detail.ingredients &&
+                        this.state.detail.ingredients.split(';').map((item, index) => {
+                            if (item) {
+                                let idx = item.indexOf(',')
+                                const name = item.substr(0, idx)
+                                const amount = item.substr(idx + 1, item.length)
+                                return <Ingredient name={name} amount={amount} key={index}></Ingredient>
+                            }
+                        })
+                    }
+                   
                 </div>
                 <div className="cook">
                     做法
                 </div>
-                {/* <div className="steps">
-                    {this.state.detail.steps.map((item,index) => {
-                        <Step steps ={item[index].step}></Step>
+                <div className="steps">
+                    {this.state.detail && this.state.detail.steps && this.state.detail.steps.map((item,index) => {
+                        return <Step step={item} key={index}></Step>
                     })}
-                </div> */}
+                </div>
             </div>
         );
     }
 }
 
-export default Recipe;
+const mapStateToProps = state => {
+    console.log('mapStateToProps:', state)
+    return state.favors
+}
+export default connect(
+    mapStateToProps,
+    {toggleFavor}
+)(Recipe);
