@@ -5,6 +5,7 @@ import Recommended from './pages/recommended'
 import Classified from './pages/classified'
 import Favorites from './pages/favorites'
 import Recipe from './pages/recipe'
+import BottomBar from './components/bottomBar'
 
 const route = () => (
   <Router>
@@ -19,6 +20,7 @@ const route = () => (
         {/* 默认路由 */}
         <Redirect to="/" />
       </Switch>
+      <Route component={BottomBar}></Route>
     </div>
   </Router>
 )

@@ -20,12 +20,13 @@ class BottomBar extends Component {
         }
     ]
     render() {
-        const pathname = window.location.hash
+        const hash = this.props.location.pathname
+        
         return (<div className="bottomBar">
             <div className="box">
                 {
                     this.routes.map((item, index) => (
-                        <div className={`bar box1 ${pathname.includes(item.path) ? 'current' : ''}`} key={index}>
+                        <div className={`bar box1 ${hash == item.path ? 'current' : ''}`} key={index}>
                             <a href={`#${item.path}`}>
                                 <div className="icon" className='icon iconfont icon-tuijian'></div>
                                 <div className="text">{item.text}</div>
