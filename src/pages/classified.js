@@ -22,15 +22,15 @@ class Classified extends Component {
     searchItems({
       keyword: text
     })
-    .then(res => {
-      let data = []
-      if (res && res.status == 200) {
-        data = res.data.data
-      }
-      this.setState({
-        recipeList: data
+      .then(res => {
+        let data = []
+        if (res && res.status == 200) {
+          data = res.data.data
+        }
+        this.setState({
+          recipeList: data
+        })
       })
-    })
   }
   getCategories = () => {
     getCategories().then(res => {
@@ -72,28 +72,40 @@ class Classified extends Component {
         />
         <div className="buttonBars"
           style={{
-            marginTop: '0.6rem'
+            marginTop: '0.6rem',
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between'
           }}
         >
           {this.state.categories.map(item => {
-            return <div className='buttonBar' key={item.id} onClick={this.changeTab(item)}>
-              <ButtonBar text={item.name} current={this.state.currentCategory.id === item.id}></ButtonBar>
-            </div>
+            return <ButtonBar key={item.id} onClick={this.changeTab(item)} style={{
+              flex: '1 1 25%',
+              width: 'auto'
+            }} text={item.name} current={this.state.currentCategory.id === item.id}></ButtonBar>
           })}
         </div>
+        <div className="list" style={{
+          marginTop: '0rem',
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'flex-start',
+          flexDirection: 'row'
+        }}>
+          {this.state.recipeList.map(item => {
+            // console.log('item: ', item);
+            return <div className='listBar' style={{
+              flex: '0 0 33.33%',
+              display: 'flex',
+              justifyContent: 'center'
+            }} key={item.id}>
+              <a href={`#/recipe/${item.id}`}>
+                <ListBar recipe={item} current={this.state.currentCategory.id === item.id} ></ListBar>
+              </a>
+            </div>
+          })}
 
-        {this.state.recipeList.map(item => {
-          // console.log('item: ', item);
-          return <div className='listBar' key={item.id} onClick={this.changeTab(item)}>
-            <a href={`#/recipe/${item.id}`}>
-            <ListBar recipe={item} current={this.state.currentCategory.id === item.id} ></ListBar>
-            </a>
-          </div>
-        })}
-
-        <div>
         </div>
-
       </div>
     )
   }

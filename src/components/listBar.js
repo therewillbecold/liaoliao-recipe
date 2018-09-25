@@ -4,7 +4,7 @@ class ListBar extends Component {
     super(props)
   }
   render() {
-    const data = this.props.recipe 
+    const data = this.props.recipe
     return (
       <div className="listBar"
         style={{
@@ -14,10 +14,12 @@ class ListBar extends Component {
         <div
           className="box"
           style={{
-            width: '1rem',
-            height: '1.3rem',
-            paddingBottom: '0.3rem',
-            float: 'left'
+            ...{
+              width: '1rem',
+              height: '1.3rem',
+              paddingBottom: '0.3rem',
+              float: 'left'
+            }, ...this.props.style
           }}
         >
           <div
@@ -43,7 +45,8 @@ class ListBar extends Component {
               height: '0.3rem',
               fontSize: '0.16rem',
               textAlign: 'center',
-              lineHeight: '0.3rem'
+              lineHeight: '0.3rem',
+              overflow: 'hidden'
             }}
           >
             {data.title}
